@@ -23,6 +23,7 @@
     "vitest": "^0.29.3"
   },
   "dependencies": {
-    "@types/node": "^18.15.3"
+    "@types/node": "^18.15.3",
+    "daisyui": "^2.51.4"
   }
 }
