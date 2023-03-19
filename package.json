@@ -8,15 +8,18 @@
     "postinstall": "nuxt prepare",
     "typecheck": "nuxi typecheck",
     "lint": "eslint .",
-    "prettier": "prettier -w -u ."
+    "prettier": "prettier -w -u .",
+    "test": "vitest"
   },
   "devDependencies": {
     "@nuxt/eslint-config": "^0.1.1",
+    "@nuxt/test-utils": "^3.3.1",
     "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.36.0",
     "eslint-plugin-prettier": "^4.2.1",
     "nuxt": "^3.3.1",
-    "prettier": "^2.8.4"
+    "prettier": "^2.8.4",
+    "vitest": "^0.29.3"
   },
   "dependencies": {
     "@types/node": "^18.15.3"
