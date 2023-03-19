@@ -80,7 +80,7 @@
           <a
               href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/presentation"
               class="font-bold text-gray-800 mt-8"
-          >履歴書を作成する</a
+          >履歴書を作る</a
           >
         </div>
         <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
