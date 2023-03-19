@@ -2,8 +2,8 @@
 
 <template>
   <div>
+    <slot/>
     <TheHeader/>
-      <slot/>
     <TheFooter/>
   </div>
 </template>
