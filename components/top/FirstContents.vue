@@ -77,11 +77,24 @@
             履歴書を通じて自分のスキルや経験、資格や実績をアピールし、採用担当者の興味を引くことができれば、就職成功への近道となります。
           </p>
           <!-- TODO: 履歴書新規作成のリンクにする          -->
-          <a
-              href="https://www.creative-tim.com/learning-lab/tailwind-starter-kit#/presentation"
+          <label
+              for="create-personal-history-modal"
               class="font-bold text-gray-800 mt-8"
-          >履歴書を作る</a
           >
+            履歴書を作る
+          </label>
+          <input type="checkbox" id="create-personal-history-modal" class="modal-toggle"/>
+          <div class="modal modal-bottom sm:modal-middle">
+            <div class="modal-box">
+              <label htmlFor="create-personal-history-modal" className="btn btn-sm btn-circle absolute right-2 top-2">✕</label>
+              <h3 class="font-bold text-lg">履歴書を作る</h3>
+              <p class="py-4">作成する履歴書に名前をつけてください</p>
+              <input class="input input-bordered w-full max-w-xs" placeholder="ここに名前を入力する" type="text" value="履歴書">
+              <div class="modal-action">
+                <button class="btn">内容を作成する</button>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
           <div
