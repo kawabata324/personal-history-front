@@ -2,7 +2,7 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev -p 8080",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -23,7 +23,9 @@
     "vitest": "^0.29.3"
   },
   "dependencies": {
+    "@pinia/nuxt": "^0.4.7",
     "@types/node": "^18.15.3",
-    "daisyui": "^2.51.4"
+    "daisyui": "^2.51.4",
+    "wrench": "^1.5.9"
   }
 }
