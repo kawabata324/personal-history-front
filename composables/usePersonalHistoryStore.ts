@@ -1,15 +1,20 @@
 import { Ref } from 'vue'
 
 type PersonalHistoryState = {
-  id: string
+  uuid: string
   name: string
 }
+
+type PostPersonalHistoryResponse = Ref<{
+  uuid: string
+  name: string
+}>
 
 export const usePersonalHistoryStore = () => {
   const state = useState<PersonalHistoryState>(
     'personal_history_state',
     () => ({
-      id: '',
+      uuid: '',
       name: '履歴書'
     })
   )
@@ -20,7 +25,7 @@ export const usePersonalHistoryStore = () => {
     setName: setName(state),
     getName: getName(state),
     setPersonalHistory: setPersonalHistory(state),
-    postPersonalHistory: postPersonalHistory()
+    postPersonalHistory: postPersonalHistory(state)
   }
 }
 
@@ -36,7 +41,7 @@ const getName = (state: Ref<PersonalHistoryState>) => {
   return () => state.value.name
 }
 
-const postPersonalHistory = () => {
+const postPersonalHistory = (state: Ref<PersonalHistoryState>) => {
   return async (name: string) => {
     const { data, error } = await useFetch(
       'http://127.0.0.1:3000/personal_histories',
@@ -52,6 +57,9 @@ const postPersonalHistory = () => {
       console.error('エラーが発生しました')
     }
 
-    return data
+    const personalHistory = data as PostPersonalHistoryResponse
+
+    state.value.name = personalHistory.value.name
+    state.value.uuid = personalHistory.value.uuid
   }
 }

@@ -1,26 +1,11 @@
 <script lang="ts" setup>
-import {Ref} from "vue";
-
 const router = useRouter();
-const personalHistoryStore = usePersonalHistoryStore;
-const {name, setPersonalHistory, postPersonalHistory} = personalHistoryStore();
+const {name, postPersonalHistory} = usePersonalHistoryStore();
 const inputName = ref(name);
 
-type PostPersonalHistoryResponse = Ref<{
-  uuid: string,
-  name: string
-}>
-
 const onSubmit = async () => {
-  const data = await postPersonalHistory(inputName.value)
-  const personalHistory = data as PostPersonalHistoryResponse
-
-  setPersonalHistory({
-    id: personalHistory.value.uuid,
-    name: personalHistory.value.name
-  })
-
-  router.push('/personalHistories')
+  await postPersonalHistory(inputName.value)
+  await router.push('/personalHistories/profile')
 }
 </script>
 
