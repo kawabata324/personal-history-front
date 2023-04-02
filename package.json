@@ -18,6 +18,7 @@
     "@vue/eslint-config-prettier": "^7.1.0",
     "eslint": "^8.36.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "localforage": "^1.10.0",
     "nuxt": "^3.3.1",
     "prettier": "^2.8.4",
     "vitest": "^0.29.3"
@@ -26,6 +27,6 @@
     "@pinia/nuxt": "^0.4.7",
     "@types/node": "^18.15.3",
     "daisyui": "^2.51.4",
-    "wrench": "^1.5.9"
+    "dexie": "^3.2.3"
   }
 }

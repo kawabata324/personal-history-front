@@ -22,6 +22,7 @@ export const usePersonalHistoryStore = () => {
   return {
     state: readonly(state),
     name: state.value.name,
+    uuid: state.value.uuid,
     setName: setName(state),
     getName: getName(state),
     setPersonalHistory: setPersonalHistory(state),
