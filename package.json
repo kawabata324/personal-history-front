@@ -27,6 +27,7 @@
     "@pinia/nuxt": "^0.4.7",
     "@types/node": "^18.15.3",
     "daisyui": "^2.51.4",
-    "dexie": "^3.2.3"
+    "dexie": "^3.2.3",
+    "nuxt-snackbar": "^1.0.2"
   }
 }
