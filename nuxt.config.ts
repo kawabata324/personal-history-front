@@ -3,5 +3,11 @@ export default defineNuxtConfig({
   typescript: {
     strict: true
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt']
+  // @ts-ignore
+  snackbar: {
+    top: true,
+    center: true,
+    duration: 5000
+  },
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'nuxt-snackbar']
 })

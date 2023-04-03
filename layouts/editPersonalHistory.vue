@@ -1,16 +1,16 @@
-<script lang="ts" setup>
-</script>
+<script lang="ts" setup></script>
 
 <template>
   <div>
-    <TheHeader/>
+    <TheHeader />
     <div class="w-96 mx-auto">
-      <BaseSteps/>
+      <BaseSteps />
       <div class="flex flex-col justify-center items-center">
-        <slot/>
+        <slot />
       </div>
     </div>
-    <TheFooter/>
+    <TheFooter />
+    <NuxtSnackbar />
   </div>
 </template>
 
