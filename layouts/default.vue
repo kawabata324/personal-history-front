@@ -2,9 +2,9 @@
 
 <template>
   <div>
-    <TheHeader/>
-    <slot/>
-    <TheFooter/>
+    <TheHeader />
+    <slot />
+    <TheFooter />
   </div>
 </template>
 
