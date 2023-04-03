@@ -1,13 +1,12 @@
-<script setup>
-</script>
+<script setup></script>
 
 <template>
   <main>
-    <TopTitleWithBackgroundImage/>
-    <TopFirstContents/>
-    <TopSecondContents/>
-    <TopTheContributor/>
-    <TopRoadMap/>
+    <TopTitleWithBackgroundImage />
+    <TopFirstContents />
+    <TopSecondContents />
+    <TopTheContributor />
+    <TopRoadMap />
   </main>
 </template>
 

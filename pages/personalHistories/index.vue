@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-const personalHistoryStore = usePersonalHistoryStore();
-const {name} = personalHistoryStore;
-
+  const personalHistoryStore = usePersonalHistoryStore()
+  const { name } = personalHistoryStore
 </script>
 
 <template>
