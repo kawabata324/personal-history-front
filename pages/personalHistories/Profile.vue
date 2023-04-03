@@ -1,33 +1,46 @@
 <script lang="ts" setup>
   import { db, Profile } from '~/utils/db'
   import { Ref } from 'vue'
+  import { store } from '~/utils/localforage'
+  import { updatePersonalHistory } from '~/api/updatePersonalHistoryProfile'
+  import { wait } from '~/utils/wait'
 
   definePageMeta({
     layout: 'edit-personal-history'
   })
 
   const { setIsEditing } = useStepsStore()
-  const { uuid } = usePersonalHistoryStore()
+  const snackbar = useSnackbar()
 
+  /* state */
+  const profile: Ref<Profile> = ref({
+    id: '',
+    firstName: '',
+    lastName: '',
+    firstNameKana: '',
+    lastNameKana: '',
+    email: '',
+    phoneNumber: null,
+    birthDateOn: null,
+    age: null,
+    sex: ''
+  })
+  const isSaveProcess = ref(false)
+  const isCreatePdfProcess = ref(false)
+  const uuid = ref('')
+
+  // lifeCycle
   onMounted(async () => {
     setIsEditing('プロフィール')
-    const profiles: Array<Profile> = await db.profile.toArray()
-    const latestProfile = profiles[profiles.length - 1]
-
-    profile.value.firstName = latestProfile.firstName
-    profile.value.lastName = latestProfile.lastName
-    profile.value.firstNameKana = latestProfile.firstNameKana
-    profile.value.lastNameKana = latestProfile.lastNameKana
-    profile.value.email = latestProfile.email
-    profile.value.birthDateOn = latestProfile.birthDateOn
-    profile.value.age = latestProfile.age
-    profile.value.phoneNumber = latestProfile.phoneNumber
-    profile.value.sex = latestProfile.sex
+    uuid.value = ((await store.getItem('uuid')) as string) || ''
+    profile.value = (await getLatestProfile()) ?? profile.value
   })
 
+  // event
   const handleChange = async () => {
     isSaveProcess.value = true
-    await db.profile.add({
+    await db.profiles.put({
+      id: uuid.value,
       firstName: profile.value.firstName,
       firstNameKana: profile.value.firstNameKana,
       lastName: profile.value.lastName,
@@ -42,60 +55,32 @@
     isSaveProcess.value = false
   }
 
-  const handleClickNext = async () => {
-    const profiles: Array<Profile> = await db.profile.toArray()
-    const {
-      firstName,
-      firstNameKana,
-      lastName,
-      lastNameKana,
-      email,
-      phoneNumber,
-      age,
-      sex,
-      birthDateOn
-    } = profiles[profiles.length - 1]
+  const handleClickPreview = async () => {
+    isCreatePdfProcess.value = true
+    await updatePersonalHistory(profile.value, uuid.value, snackbar)
 
-    const { data, error } = await useFetch(
-      `http://127.0.0.1:3000/personal_histories/${uuid}/profile`,
-      {
-        method: 'put',
-        body: {
-          firstName,
-          firstNameKana,
-          lastName,
-          lastNameKana,
-          email,
-          phoneNumber,
-          age,
-          sex,
-          birthDateOn
-        }
-      }
+    await useFetch(
+      `http://127.0.0.1:3000/personal_histories/${uuid.value}/pdfs`,
+      { method: 'get' }
     )
-
-    if (error.value) {
-      console.error('エラーが発生しました')
-    }
-    console.log(data.value)
+    await window.open(
+      `http://127.0.0.1:3000/personal_histories/${uuid.value}/pdfs`,
+      '_blank'
+    )
+    isCreatePdfProcess.value = false
   }
 
-  const profile: Ref<Profile> = ref({
-    firstName: '',
-    lastName: '',
-    firstNameKana: '',
-    lastNameKana: '',
-    email: '',
-    phoneNumber: null,
-    birthDateOn: null,
-    age: null,
-    sex: ''
-  })
+  const handleClickNext = async () => {
+    await updatePersonalHistory(profile.value, uuid.value, snackbar)
+  }
 
-  const isSaveProcess = ref(false)
-
-  async function wait(ms: number) {
-    await new Promise((resolve) => setTimeout(resolve, ms))
+  const getLatestProfile = async () => {
+    try {
+      const profiles = await db.profiles.toArray()
+      return profiles[profiles.length - 1]
+    } catch (e) {
+      console.log(e)
+    }
   }
 </script>
 
@@ -104,6 +89,10 @@
     <h1 class="font-bold text-center">プロフィールを入力</h1>
     <div v-if="isSaveProcess">
       <p>保存中...</p>
+      <progress class="progress progress-primary w-full mt-2"></progress>
+    </div>
+    <div v-else-if="isCreatePdfProcess">
+      <p>作成中...</p>
       <progress class="progress progress-primary w-full mt-2"></progress>
     </div>
     <hr v-else class="bg-primary w-full mt-2 h-2" />
@@ -242,7 +231,7 @@
       </div>
     </form>
     <div class="m-5 flex justify-between">
-      <button class="btn btn-primary">
+      <button class="btn btn-primary" @click="handleClickPreview">
         <a
           :href="`http://127.0.0.1:3000/personal_histories/${uuid}/pdfs`"
           target="_blank"
@@ -254,5 +243,3 @@
     </div>
   </div>
 </template>
-
-<style scoped></style>
