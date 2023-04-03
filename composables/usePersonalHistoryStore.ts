@@ -1,4 +1,5 @@
 import { Ref } from 'vue'
+import { store } from '~/utils/localforage'
 
 type PersonalHistoryState = {
   uuid: string
@@ -62,5 +63,6 @@ const postPersonalHistory = (state: Ref<PersonalHistoryState>) => {
 
     state.value.name = personalHistory.value.name
     state.value.uuid = personalHistory.value.uuid
+    await store.setItem('uuid', state.value.uuid)
   }
 }
