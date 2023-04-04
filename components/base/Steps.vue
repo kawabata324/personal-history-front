@@ -1,5 +1,10 @@
 <script lang="ts" setup>
   const { steps } = useStepsStore()
+  const router = useRouter()
+  const onClickStep = (path: string) => {
+    console.log(path)
+    router.push({ path: path })
+  }
 </script>
 
 <template>
@@ -9,6 +14,7 @@
         class="step"
         :data-content="step.isEditing ? '●' : ''"
         :class="step.isEditing ? 'step-primary' : ''"
+        @click="onClickStep(step.path)"
       >
         {{ step.title }}
       </li>

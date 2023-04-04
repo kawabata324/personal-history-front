@@ -13,14 +13,23 @@ export interface Profile {
   sex: string
 }
 
+export interface Address {
+  id: string
+  postalCode: string
+  content: string
+  contentKana: string
+}
+
 export class MySubClassedDexie extends Dexie {
   profiles!: Table<Profile>
+  addresses!: Table<Address>
 
   constructor() {
     super('personalHistoryDexie')
-    this.version(2).stores({
+    this.version(3).stores({
       profiles:
-        'id, firstName, firstNameKana, lastName, lastNameKana, email, phoneNumber, birthDateOn, age, sex'
+        'id, firstName, firstNameKana, lastName, lastNameKana, email, phoneNumber, birthDateOn, age, sex',
+      addresses: 'id, postalCode, content, contentKana'
     })
   }
 }

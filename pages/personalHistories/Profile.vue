@@ -11,6 +11,7 @@
 
   const { setIsEditing } = useStepsStore()
   const snackbar = useSnackbar()
+  const router = useRouter()
 
   /* state */
   const profile: Ref<Profile> = ref({
@@ -72,12 +73,12 @@
 
   const handleClickNext = async () => {
     await updatePersonalHistory(profile.value, uuid.value, snackbar)
+    await router.push({ path: '/personalHistories/address' })
   }
 
   const getLatestProfile = async () => {
     try {
-      const profiles = await db.profiles.toArray()
-      return profiles[profiles.length - 1]
+      return await db.profiles.where('id').equals(uuid.value).last()
     } catch (e) {
       console.log(e)
     }
@@ -86,7 +87,7 @@
 
 <template>
   <div>
-    <h1 class="font-bold text-center">プロフィールを入力</h1>
+    <h1 class="font-bold text-center mt-2">プロフィールを入力</h1>
     <div v-if="isSaveProcess">
       <p>保存中...</p>
       <progress class="progress progress-primary w-full mt-2"></progress>

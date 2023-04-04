@@ -4,6 +4,7 @@ import { DEFAULT_STEPS } from '~/constants/steps'
 export type Step = {
   readonly title: string
   isEditing: boolean
+  path: string
 }
 
 type StepsState = {
