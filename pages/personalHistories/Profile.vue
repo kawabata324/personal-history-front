@@ -2,14 +2,9 @@
   import { db, Profile } from '~/utils/db'
   import { Ref } from 'vue'
   import { store } from '~/utils/localforage'
-  import { updatePersonalHistory } from '~/api/updatePersonalHistoryProfile'
   import { wait } from '~/utils/wait'
-  import ProfileForm from '~/components/form/ProfileForm.vue'
-  import PreviewButton from '~/components/button/PreviewButton.vue'
-  import NextButton from '~/components/button/NextButton.vue'
-  import ProgressBar from '~/components/ProgressBar.vue'
-  import { useProgressStore } from '~/composables/useProgressStore'
-  import { usePersonalHistoryStore } from '~/composables/usePersonalHistoryStore'
+  import { updatePersonalHistory } from '~/api/updatePersonalHistoryProfile'
+  import { checkPersonalHistoryPdf } from '~/api/checkPersonalHistoryPdf'
 
   definePageMeta({
     layout: 'edit-personal-history'
@@ -61,6 +56,7 @@
       age: profile.value.age,
       sex: profile.value.sex
     })
+    /* NOTE: 数秒待つことで保存している感じを出す */
     await wait(2000)
     setIsSaving(false)
   }
@@ -69,9 +65,7 @@
     setIsCreating(true)
     await updatePersonalHistory(profile.value, uuid, snackbar)
 
-    await useFetch(`http://127.0.0.1:3000/personal_histories/${uuid}/pdfs`, {
-      method: 'get'
-    })
+    await checkPersonalHistoryPdf(uuid, snackbar)
     await window.open(
       `http://127.0.0.1:3000/personal_histories/${uuid}/pdfs`,
       '_blank'
@@ -95,8 +89,8 @@
 
 <template>
   <div>
-    <h1 class="font-bold text-center mt-2">プロフィールを入力</h1>
-    <ProgressBar is-create-pdf-process="" is-save-process="" />
+    <TheTitle title="プロフィールを入力" />
+    <ProgressBar />
     <ProfileForm
       :first-name-kana="profile.firstNameKana"
       :birth-date-on="profile.birthDateOn"

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-  import { Address, db } from '~/utils/db'
+  import {  db } from '~/utils/db'
   import { store } from '~/utils/localforage'
   import { wait } from '~/utils/wait'
   import { updateAddress } from '~/api/updateAddress'
