@@ -91,18 +91,7 @@
   <div>
     <TheTitle title="プロフィールを入力" />
     <ProgressBar />
-    <ProfileForm
-      :first-name-kana="profile.firstNameKana"
-      :birth-date-on="profile.birthDateOn"
-      :first-name="profile.firstName"
-      :last-name="profile.lastName"
-      :phone-number="profile.phoneNumber"
-      :handle-change="handleChange"
-      :sex="profile.sex"
-      :last-name-kana="profile.lastNameKana"
-      :email="profile.email"
-      :age="profile.age"
-    />
+    <ProfileForm :profile="profile" :handle-change="handleChange" />
     <div class="m-5 flex justify-between">
       <PreviewButton :handle-click-preview="handleClickPreview" :uuid="uuid" />
       <NextButton :handle-click-next="handleClickNext" />

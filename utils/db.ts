@@ -1,6 +1,6 @@
 import Dexie, { Table } from 'dexie'
 
-export interface Profile {
+export type Profile = {
   id: string
   firstName: string
   firstNameKana: string
