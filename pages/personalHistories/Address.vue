@@ -17,7 +17,7 @@
   /* custom composable */
   const { setIsEditing } = useStepsStore()
   const { setIsSaving, setIsCreating } = useProgressStore()
-  const { uuid, setUuid } = usePersonalHistoryStore()
+  const { state, setUuid } = usePersonalHistoryStore()
 
   /* state */
   const address: Ref<Address> = ref({
@@ -39,7 +39,7 @@
   const handleChange = async () => {
     setIsSaving(true)
     await db.addresses.put({
-      id: uuid,
+      id: state.value.uuid,
       postalCode: address.value.postalCode,
       content: address.value.content,
       contentKana: address.value.contentKana
@@ -50,23 +50,23 @@
 
   const handleClickPreview = async () => {
     setIsCreating(true)
-    await updateAddress(address.value, uuid, snackbar)
-    await checkPersonalHistoryPdf(uuid, snackbar)
+    await updateAddress(address.value, state.value.uuid, snackbar)
+    await checkPersonalHistoryPdf(state.value.uuid, snackbar)
     await window.open(
-      `http://127.0.0.1:3000/personal_histories/${uuid}/pdfs`,
+      `http://127.0.0.1:3000/personal_histories/${state.value.uuid}/pdfs`,
       '_blank'
     )
     setIsCreating(false)
   }
 
   const handleClickNext = async () => {
-    await updateAddress(address.value, uuid, snackbar)
-    await router.push({ path: '/personalHistories/education' })
+    await updateAddress(address.value, state.value.uuid, snackbar)
+    await router.push({ path: '/personalHistories/educationalBackground' })
   }
 
   const getLatestAddress = async () => {
     try {
-      return await db.addresses.where('id').equals(uuid).last()
+      return await db.addresses.where('id').equals(state.value.uuid).last()
     } catch (e) {
       console.log(e)
     }
@@ -77,10 +77,10 @@
   <div>
     <TheTitle title="住所を入力してください" />
     <ProgressBar />
-    <AddressForm :address="address" :handle-change="handleChange" />
+    <AddressForm v-model:address="address" :handle-change="handleChange" />
     <img class="mt-5" src="/coffee.jpg" alt="coffee" />
     <div class="m-5 flex justify-between">
-      <PreviewButton :handle-click-preview="handleClickPreview" :uuid="uuid" />
+      <PreviewButton :handle-click-preview="handleClickPreview" />
       <NextButton :handle-click-next="handleClickNext" />
     </div>
   </div>

@@ -17,7 +17,7 @@
   /* custom composable */
   const { setIsEditing } = useStepsStore()
   const { setIsSaving, setIsCreating } = useProgressStore()
-  const { uuid, setUuid } = usePersonalHistoryStore()
+  const { state, setUuid } = usePersonalHistoryStore()
 
   /* state */
   const profile: Ref<Profile> = ref({
@@ -45,7 +45,7 @@
   const handleChange = async () => {
     setIsSaving(true)
     await db.profiles.put({
-      id: uuid,
+      id: state.value.uuid,
       firstName: profile.value.firstName,
       firstNameKana: profile.value.firstNameKana,
       lastName: profile.value.lastName,
@@ -63,24 +63,24 @@
 
   const handleClickPreview = async () => {
     setIsCreating(true)
-    await updatePersonalHistory(profile.value, uuid, snackbar)
+    await updatePersonalHistory(profile.value, state.value.uuid, snackbar)
 
-    await checkPersonalHistoryPdf(uuid, snackbar)
+    await checkPersonalHistoryPdf(state.value.uuid, snackbar)
     await window.open(
-      `http://127.0.0.1:3000/personal_histories/${uuid}/pdfs`,
+      `http://127.0.0.1:3000/personal_histories/${state.value.uuid}/pdfs`,
       '_blank'
     )
     setIsCreating(false)
   }
 
   const handleClickNext = async () => {
-    await updatePersonalHistory(profile.value, uuid, snackbar)
+    await updatePersonalHistory(profile.value, state.value.uuid, snackbar)
     await router.push({ path: '/personalHistories/address' })
   }
 
   const getLatestProfile = async () => {
     try {
-      return await db.profiles.where('id').equals(uuid).last()
+      return await db.profiles.where('id').equals(state.value.uuid).last()
     } catch (e) {
       console.log(e)
     }
@@ -91,9 +91,9 @@
   <div>
     <TheTitle title="プロフィールを入力" />
     <ProgressBar />
-    <ProfileForm :profile="profile" :handle-change="handleChange" />
+    <ProfileForm v-model:profile="profile" :handle-change="handleChange" />
     <div class="m-5 flex justify-between">
-      <PreviewButton :handle-click-preview="handleClickPreview" :uuid="uuid" />
+      <PreviewButton :handle-click-preview="handleClickPreview" />
       <NextButton :handle-click-next="handleClickNext" />
     </div>
   </div>

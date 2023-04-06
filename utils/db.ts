@@ -20,16 +20,27 @@ export type Address = {
   contentKana: string
 }
 
+export type EducationalBackground = {
+  id?: number
+  backgroundId?: number
+  uuid: string
+  description: string
+  happenedOn: string
+}
+
 export class MySubClassedDexie extends Dexie {
   profiles!: Table<Profile>
   addresses!: Table<Address>
+  educationalBackgrounds!: Table<EducationalBackground>
 
   constructor() {
     super('personalHistoryDexie')
-    this.version(3).stores({
+    this.version(8).stores({
       profiles:
         'id, firstName, firstNameKana, lastName, lastNameKana, email, phoneNumber, birthDateOn, age, sex',
-      addresses: 'id, postalCode, content, contentKana'
+      addresses: 'id, postalCode, content, contentKana',
+      educationalBackgrounds:
+        '++id, description, happenedOn, uuid, backgroundId'
     })
   }
 }

@@ -9,5 +9,5 @@ export default defineNuxtConfig({
     center: true,
     duration: 5000
   },
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'nuxt-snackbar']
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt', 'nuxt-snackbar', 'nuxt-icon']
 })

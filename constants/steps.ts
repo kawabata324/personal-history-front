@@ -14,7 +14,7 @@ export const DEFAULT_STEPS: Array<Step> = [
   {
     title: '学歴',
     isEditing: false,
-    path: '/personalHistories/educational'
+    path: '/personalHistories/educationalBackground'
   },
   {
     title: '免許・資格等',
