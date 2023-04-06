@@ -13,7 +13,7 @@ export interface Profile {
   sex: string
 }
 
-export interface Address {
+export type Address = {
   id: string
   postalCode: string
   content: string
