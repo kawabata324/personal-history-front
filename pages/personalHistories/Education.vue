@@ -1,6 +1,5 @@
 <script lang="ts" setup>
   import { Address, db } from '~/utils/db'
-  import { Ref } from 'vue'
   import { store } from '~/utils/localforage'
   import { wait } from '~/utils/wait'
   import { updateAddress } from '~/api/updateAddress'
@@ -14,7 +13,7 @@
   const router = useRouter()
 
   /* state */
-  const address: Ref<Address> = ref({
+  const address = ref({
     id: '',
     postalCode: '',
     content: '',
@@ -88,7 +87,7 @@
     <hr v-else class="bg-primary w-full mt-2 h-2" />
     <form class="mt-2">
       <div class="form-control w-full max-w-xs">
-        <!-- 年月 -->
+        <!-- 学歴 -->
         <div>
           <label class="label">
             <span class="label-text">郵便番号 (-を省略して入力する)</span>

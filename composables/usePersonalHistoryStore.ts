@@ -25,6 +25,7 @@ export const usePersonalHistoryStore = () => {
     name: state.value.name,
     uuid: state.value.uuid,
     setName: setName(state),
+    setUuid: setUuid(state),
     getName: getName(state),
     setPersonalHistory: setPersonalHistory(state),
     postPersonalHistory: postPersonalHistory(state)
@@ -37,6 +38,10 @@ const setPersonalHistory = (state: Ref<PersonalHistoryState>) => {
 }
 const setName = (state: Ref<PersonalHistoryState>) => {
   return (name: string) => (state.value.name = name)
+}
+
+const setUuid = (state: Ref<PersonalHistoryState>) => {
+  return (uuid: string) => (state.value.uuid = uuid)
 }
 
 const getName = (state: Ref<PersonalHistoryState>) => {

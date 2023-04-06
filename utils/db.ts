@@ -7,7 +7,7 @@ export interface Profile {
   lastName: string
   lastNameKana: string
   email: string
-  phoneNumber: number | null
+  phoneNumber: string
   birthDateOn: Date | null
   age: number | null
   sex: string
